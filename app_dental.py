@@ -3,12 +3,13 @@ import numpy as np
 from PIL import Image
 from ultralytics import YOLO
 import cv2
+import io
 
 # Load YOLO model
 MODEL_PATH = "best.pt"
 model = YOLO(MODEL_PATH)
 
-# Streamlit UI
+# Streamlit UI setup
 st.set_page_config(page_title="Dental Procedure Detection", layout="centered")
 st.title("🦷 Dental Procedure Detection App")
 st.write("Upload a dental image to detect procedures using YOLOv8.")
@@ -48,9 +49,17 @@ if uploaded_file:
         detected_image = Image.fromarray(image_np)
         st.image(detected_image, caption="✅ Detection Result", use_column_width=True)
 
-        if st.button("💾 Save Detected Image"):
-            detected_image.save("detected_image.png")
-            st.success("Image saved as detected_image.png")
+        # Convert image to bytes for browser download
+        img_bytes = io.BytesIO()
+        detected_image.save(img_bytes, format="PNG")
+        img_bytes.seek(0)
+
+        st.download_button(
+            label="💾 Download Detected Image",
+            data=img_bytes,
+            file_name="detected_image.png",
+            mime="image/png"
+        )
 
 # Footer
 st.markdown("---")
