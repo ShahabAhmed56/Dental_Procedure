@@ -16,7 +16,7 @@ This Streamlit app uses YOLOv8 (via Ultralytics) and OpenCV to detect and visual
 
 ## 📦 Installation (Local)
 ```bash
-git clone https://github.com/yourusername/dental_procedure.git
+git clone https://github.com/ShahabAhmed56/Dental_Procedure.git
 cd dental_procedure
 pip install -r requirements.txt
 streamlit run app_dental.py
